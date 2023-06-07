@@ -193,18 +193,43 @@ def main():
 
     option = 0
     while option != 4:
-        print("SELECT HOSPITAL")
+        print("***MENU***")
         print("1)Get a list of all hospitals")
-        print("2)Get the list of all drivers")
-        print("3)Choose an option here")
+        print("2)Select hospital of choice")
+        print("3)Select your location")
         print("4)Leave Menu")
         option = int(input())
 
         if option == 1:
-        #   hospital_list =([])
-          hospital_list = session.query(Hospital).all()
-          hospital_list.append([])
-          print(hospital_list)
+        
+          hospitals_list = session.query(Hospital).all()
+          hospitals_list.append([])
+          for hospitals in hospitals_list:
+            print(hospitals)
+
+#   ***** Check this filter ***** 
+        elif option == 2:
+            print ("Select hospital of choice")
+            user_input = input("Enter the hospital name:")
+            hospitals = session.query(Hospital).filter(Hospital.name == user_input)
+            for hospital in hospitals:
+              print (hospital.id, hospital.name, hospital.location)
+
+        elif option == 3:
+            print ("Select the location")
+            user_input = input("Enter the location:")
+            hospitals = session.query(Hospital).filter(Hospital.location== user_input)
+            for hospital in hospitals:
+              print(hospital.id, hospital.name, hospital.location)
+
+        elif option == 4:
+            print("Thank You, Leaving Menu")
+
+        else:
+            print("Invalid input")
+            
+
+           
 
 if __name__ == "__main__":
     main()
