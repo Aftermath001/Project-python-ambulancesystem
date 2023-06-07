@@ -59,6 +59,7 @@ class Hospital(Base):
     id = Column(Integer(), primary_key= True)
     name = Column(String())
     location= Column(String())
+    hotLine =  Column(Integer())
     # hospital_id = Column(Integer(), ForeignKey('hospital.id'))
     patient_id = Column(Integer(), ForeignKey('patients.id'))
     
@@ -167,25 +168,48 @@ if __name__ == '__main__':
     # Hospital Instances
     hospital1 = Hospital(
         name = "Kenyatta Hospital",
-        location = "Kenyatta"
+        location = "Kenyatta",
+        hotLine = 452
     )
     hospital2 = Hospital(
         name = "Mp Shah",
-        location = "Parklands"
+        location = "Parklands",
+        hotLine = 708
     )
     hospital3 = Hospital(
         name = "Mata Hospital",
-        location = "Eastlands"
+        location = "Eastlands",
+        hotLine = 254
     )
     hospital4 = Hospital(
-        name = "Nairobi West",\
-        location = "Westlands"
+        name = "Aga Khan",
+        location = "Kajiado",
+        hotLine= 432
     )
-    
+    hospital5 = Hospital(
+        name = "Mata Hospital",
+        location = "Westlands",
+        hotLine= 500
+    )
+    hospital6 = Hospital(
+        name = "Iran Hospital",
+        location = "Adams Arcade",
+        hotLine= 575
+    )
+    hospital7 = Hospital(
+        name = "King David",
+        location = "Kajiado",
+        hotLine= 990
+    )
+    hospital8= Hospital(
+        name = "Aga Khan",
+        location = "Westlands",
+        hotLine= 483
+    )
     session.add_all([patient1, patient2,patient3,patient4])
     session.add_all([driver1, driver2,driver3,driver4,driver5,driver6])
     session.add_all([vehicle1, vehicle2,vehicle3,vehicle4,vehicle5])
-    session.add_all([hospital1, hospital2,hospital3,hospital4])
+    session.add_all([hospital1, hospital2,hospital3,hospital4,hospital5,hospital6,hospital7,hospital8])
 
     session.commit()
 # Menu details
@@ -213,14 +237,14 @@ def main():
             user_input = input("Enter the hospital name:")
             hospitals = session.query(Hospital).filter(Hospital.name == user_input)
             for hospital in hospitals:
-              print (hospital.id, hospital.name, hospital.location)
+              print (hospital.id, hospital.name, hospital.location, hospital.hotLine )
 
         elif option == 3:
             print ("Select the location")
             user_input = input("Enter the location:")
             hospitals = session.query(Hospital).filter(Hospital.location== user_input)
             for hospital in hospitals:
-              print(hospital.id, hospital.name, hospital.location)
+              print(hospital.id, hospital.name, hospital.location, hospital.hotLine)
 
         elif option == 4:
             print("Thank You, Leaving Menu")
