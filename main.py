@@ -29,11 +29,13 @@ class Vehicle(Base):
     __tablename__ = 'vehicles'
     id = Column(Integer(), primary_key= True)
     registration = Column(String())
+    location = Column(String())
     drivers = relationship('Driver', backref=backref('vehicle'))
     
     def __repr__ (self):
         return f' Vehicle(id = {self.id})'+\
-            f'registration={self.registration}'
+            f'registration={self.registration}'+\
+            f'location = {self.location}'
 
 
 
@@ -150,19 +152,36 @@ if __name__ == '__main__':
     
     # Vehicle Instances
     vehicle1 = Vehicle(
-        registration = "KAR-275J"
+        registration = "KAR-275J",
+        location = "Kenyatta"
         )
     vehicle2 = Vehicle(
-        registration = "KBC-350V"
+        registration = "KBC-350V",
+        location = "Parklands"
         )
     vehicle3 = Vehicle(
-        registration = "KBE-415R"
+        registration = "KBE-415R",
+        location = "Kenyatta"
         )
     vehicle4 = Vehicle(
-        registration = "KAZ-150C"
+        registration = "KAZ-150C",
+        location = "Eastlands"
         )
     vehicle5 = Vehicle(
-        registration = "KDC-200V"
+        registration = "KBV-420V",
+        location = "Kajiado"
+        )
+    vehicle6 = Vehicle(
+        registration = "KAS-975J",
+        location = "Adams Arcade"
+        )
+    vehicle7 = Vehicle(
+        registration = "KXY-469L",
+        location = "Kajiado"
+        )
+    vehicle8 = Vehicle(
+        registration = "KAZ-350F",
+        location = "Westlands"
         )
     
     # Hospital Instances
@@ -208,7 +227,7 @@ if __name__ == '__main__':
     )
     session.add_all([patient1, patient2,patient3,patient4])
     session.add_all([driver1, driver2,driver3,driver4,driver5,driver6])
-    session.add_all([vehicle1, vehicle2,vehicle3,vehicle4,vehicle5])
+    session.add_all([vehicle1, vehicle2,vehicle3,vehicle4,vehicle5,vehicle6,vehicle7,vehicle8])
     session.add_all([hospital1, hospital2,hospital3,hospital4,hospital5,hospital6,hospital7,hospital8])
 
     session.commit()
@@ -222,6 +241,7 @@ def main():
         print("2)Select hospital of choice")
         print("3)Select your location")
         print("4)Leave Menu")
+        
         option = int(input())
 
         if option == 1:
@@ -237,14 +257,15 @@ def main():
             user_input = input("Enter the hospital name:")
             hospitals = session.query(Hospital).filter(Hospital.name == user_input)
             for hospital in hospitals:
-              print (hospital.id, hospital.name, hospital.location, hospital.hotLine )
+              print (hospital.id, hospital.name, hospital.location, hospital.hotLine)
 
         elif option == 3:
             print ("Select the location")
             user_input = input("Enter the location:")
-            hospitals = session.query(Hospital).filter(Hospital.location== user_input)
-            for hospital in hospitals:
-              print(hospital.id, hospital.name, hospital.location, hospital.hotLine)
+            for hospital , vehicle in session.query(Hospital, Vehicle).filter(Hospital.location== user_input, Vehicle.location == user_input):
+              print(hospital.id, hospital.name, hospital.location, hospital.hotLine,vehicle.registration)
+            # for hospital in hospitals:
+              
 
         elif option == 4:
             print("Thank You, Leaving Menu")
