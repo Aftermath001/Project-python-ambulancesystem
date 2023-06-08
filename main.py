@@ -15,7 +15,7 @@ class Patient(Base):
     description = Column(String())
     level = Column(Integer())
     drivers = relationship('Driver', backref=backref('patient'))
-    # patients = relationship ('Patient', backref=backref('hospital'))
+    
     hospitals = relationship ('Hospital', backref=backref('patient'))
     
     def __repr__(self):
@@ -43,7 +43,7 @@ class Driver(Base):
     __tablename__ = 'drivers'
     id = Column (Integer(), primary_key=True)
     name = Column(Integer())
-
+ 
     patient_id = Column(Integer(), ForeignKey('patients.id'))
     vehicle_id = Column(Integer(), ForeignKey('vehicles.id'))
     def __repr__(self):
@@ -62,7 +62,7 @@ class Hospital(Base):
     name = Column(String())
     location= Column(String())
     hotLine =  Column(Integer())
-    # hospital_id = Column(Integer(), ForeignKey('hospital.id'))
+#    Relationships
     patient_id = Column(Integer(), ForeignKey('patients.id'))
     
     def __repr__ (self):
@@ -231,6 +231,8 @@ if __name__ == '__main__':
     session.add_all([hospital1, hospital2,hospital3,hospital4,hospital5,hospital6,hospital7,hospital8])
 
     session.commit()
+
+
 # Menu details
 def main():
 
@@ -251,20 +253,24 @@ def main():
           for hospitals in hospitals_list:
             print(hospitals)
 
-#   ***** Check this filter ***** 
+
+
+#   ***** Print a list ***** 
         elif option == 2:
             print ("Select hospital of choice")
             user_input = input("Enter the hospital name:")
             hospitals = session.query(Hospital).filter(Hospital.name == user_input)
             for hospital in hospitals:
-              print (hospital.id, hospital.name, hospital.location, hospital.hotLine)
+              print ([hospital.id, hospital.name, hospital.location, hospital.hotLine])
 
+
+# Print a tuple
         elif option == 3:
             print ("Select the location")
             user_input = input("Enter the location:")
             for hospital , vehicle in session.query(Hospital, Vehicle).filter(Hospital.location== user_input, Vehicle.location == user_input):
-              print(hospital.id, hospital.name, hospital.location, hospital.hotLine,vehicle.registration)
-            # for hospital in hospitals:
+                print(("ID=",hospital.id,"Name=", hospital.name,"Location=", hospital.location, "Hotline:",hospital.hotLine,"Number Plate=",vehicle.registration))
+            
               
 
         elif option == 4:
