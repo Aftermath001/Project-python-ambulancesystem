@@ -188,44 +188,52 @@ if __name__ == '__main__':
     hospital1 = Hospital(
         name = "Kenyatta Hospital",
         location = "Kenyatta",
-        hotLine = 452
+        hotLine = 452,
+        patient_id = 2
     )
     hospital2 = Hospital(
         name = "Mp Shah",
         location = "Parklands",
-        hotLine = 708
+        hotLine = 708,
+        patient_id = 4
     )
     hospital3 = Hospital(
         name = "Mata Hospital",
         location = "Eastlands",
-        hotLine = 254
+        hotLine = 254,
+        patient_id = 1
     )
     hospital4 = Hospital(
         name = "Aga Khan",
         location = "Kajiado",
-        hotLine= 432
+        hotLine= 432,
+        patient_id = 6
     )
     hospital5 = Hospital(
         name = "Mata Hospital",
         location = "Westlands",
-        hotLine= 500
+        hotLine= 500,
+        patient_id = 3
     )
     hospital6 = Hospital(
         name = "Iran Hospital",
         location = "Adams Arcade",
-        hotLine= 575
+        hotLine= 575,
+        patient_id = 2
     )
     hospital7 = Hospital(
         name = "King David",
         location = "Kajiado",
-        hotLine= 990
+        hotLine= 990,
+        patient_id = 4
     )
     hospital8= Hospital(
         name = "Aga Khan",
         location = "Westlands",
-        hotLine= 483
+        hotLine= 483,
+        patient_id = 1
     )
-    session.add_all([patient1, patient2,patient3,patient4])
+    session.add_all([patient1, patient2,patient3,patient4,patient5,patient6])
     session.add_all([driver1, driver2,driver3,driver4,driver5,driver6])
     session.add_all([vehicle1, vehicle2,vehicle3,vehicle4,vehicle5,vehicle6,vehicle7,vehicle8])
     session.add_all([hospital1, hospital2,hospital3,hospital4,hospital5,hospital6,hospital7,hospital8])
