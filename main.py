@@ -4,18 +4,22 @@ from sqlalchemy.orm import relationship, backref
 from sqlalchemy import ForeignKey, Column, Integer, String
 from sqlalchemy.orm import sessionmaker
 
-
+# A declarative base to help in inheritance
 Base = declarative_base()
 
 class Patient(Base):
+    # Table
     __tablename__ = 'patients'
+
+    # Columns with table attributes
     id = Column (Integer(), primary_key= True)
     firstName = Column(String())
     lastName = Column(String())
     description = Column(String())
     level = Column(Integer())
+
+    # Table Relations
     drivers = relationship('Driver', backref=backref('patient'))
-    
     hospitals = relationship ('Hospital', backref=backref('patient'))
     
     def __repr__(self):
@@ -26,12 +30,16 @@ class Patient(Base):
            f'level ={self.level}'
 
 class Vehicle(Base):
+    # Table
     __tablename__ = 'vehicles'
+    # Columns with table attributes
     id = Column(Integer(), primary_key= True)
     registration = Column(String())
     location = Column(String())
+
+    # Table Relations
     drivers = relationship('Driver', backref=backref('vehicle'))
-    
+    # Representation of Class Objects
     def __repr__ (self):
         return f' Vehicle(id = {self.id})'+\
             f'registration={self.registration}'+\
@@ -40,12 +48,19 @@ class Vehicle(Base):
 
 
 class Driver(Base):
+
+    # Table
     __tablename__ = 'drivers'
+
+    # Columns with table attributes
     id = Column (Integer(), primary_key=True)
     name = Column(Integer())
- 
+
+    #   Table Relations
     patient_id = Column(Integer(), ForeignKey('patients.id'))
     vehicle_id = Column(Integer(), ForeignKey('vehicles.id'))
+
+    # Representation of Class Objects
     def __repr__(self):
         return f'Driver(id = {self.id})'+\
            f'name = {self.name}'+\
@@ -57,14 +72,19 @@ class Driver(Base):
     
 
 class Hospital(Base):
+
+    # Table
     __tablename__ = 'hospitals'
+    # Columns with table attributes
     id = Column(Integer(), primary_key= True)
     name = Column(String())
     location= Column(String())
     hotLine =  Column(Integer())
+
 #    Relationships
     patient_id = Column(Integer(), ForeignKey('patients.id'))
-    
+
+# Representation of Class Objects
     def __repr__ (self):
         return f' Hospital(id = {self.id})'+\
             f'name={self.name}'+\
@@ -233,6 +253,8 @@ if __name__ == '__main__':
         hotLine= 483,
         patient_id = 1
     )
+
+    # Addition of Sessions To Datatabase and commiting the sessions to the DB
     session.add_all([patient1, patient2,patient3,patient4,patient5,patient6])
     session.add_all([driver1, driver2,driver3,driver4,driver5,driver6])
     session.add_all([vehicle1, vehicle2,vehicle3,vehicle4,vehicle5,vehicle6,vehicle7,vehicle8])
